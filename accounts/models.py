@@ -5,7 +5,6 @@ class Profile(models.Model):
     USER_ROLES = [
         ('buyer', 'Buyer'),
         ('agent', 'Agent'),
-        ('admin', 'Admin'),
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.CharField(max_length=10, choices=USER_ROLES, default='buyer')
@@ -14,7 +13,7 @@ class Profile(models.Model):
     profile_picture = models.ImageField(upload_to='profiles/', blank=True, null=True)
 
 
-def __str__(self):
+    def __str__(self):
         return f"{self.user.username} - {self.role}"
 
 # from django.db.models.signals import post_save
