@@ -78,6 +78,12 @@
                     <p class="card-text"><b>{{i.property_type}}</b>&mdash;<span class="badge rounded-pill bg-warning">{{i.requirement}}</span></p>
                     {% endif %}
                     <a href="{% url 'listing:propertydetail' i.id %}" class="btn btn-primary">See details</a>
+                    {% if user.is_authenticated %}
+                      {% if user.profile.role == 'agent' %}
+                    <a type="button" href="{% url 'listing:editproperty' i.id %}" style="padding: 4px 8px; font-size: 14px;" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'listing:deleteproperty' i.id %}" class="btn btn-danger" style="padding: 4px 8px; font-size: 14px;">Delete</a>
+                    {% endif %}
+                    {% endif %}
               </div>
             </div>
                 {% endfor %}
@@ -119,12 +125,11 @@
           <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
             <div class="box-feature">
               <span class="flaticon-house"></span>
-              <h3 class="mb-3">Our Properties</h3>
+              <h3 class="mb-3">Properties for Rent</h3>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Voluptates, accusamus.
+                Discover the property that feels like home. Your journey begins here.
               </p>
-              <p><a href="#" class="learn-more">Learn More</a></p>
+              <p><a href="{% url 'listing:propertyforrent' %}" class="learn-more">Learn More</a></p>
             </div>
           </div>
           <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
@@ -132,10 +137,11 @@
               <span class="flaticon-building"></span>
               <h3 class="mb-3">Property for Sale</h3>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Voluptates, accusamus.
+               Explore Properties Designed for You.
+                  From cozy apartments to spacious family houses.
+
               </p>
-              <p><a href="#" class="learn-more">Learn More</a></p>
+              <p><a href="{% url 'listing:propertyforsale' %}" class="learn-more">Learn More</a></p>
             </div>
           </div>
           <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
@@ -157,7 +163,7 @@
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Voluptates, accusamus.
               </p>
-              <p><a href="#" class="learn-more">Learn More</a></p>
+              <p><a href="{% url 'listing:houseforsale' %}" class="learn-more">Learn More</a></p>
             </div>
           </div>
         </div>

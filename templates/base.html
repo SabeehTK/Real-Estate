@@ -53,18 +53,27 @@
               <li class="has-children">
                 <a href="properties.html">Properties</a>
                 <ul class="dropdown">
-                  <li><a href="#">Buy Property</a></li>
-                  <li><a href="#">Sell Property</a></li>
-                  <li class="has-children">
-                    <a href="#">Dropdown</a>
-                    <ul class="dropdown">
-                      <li><a href="#">Sub Menu One</a></li>
-                      <li><a href="#">Sub Menu Two</a></li>
-                      <li><a href="#">Sub Menu Three</a></li>
+                  <li class="has-children"><a href="#">For Sale</a>
+                  <ul class="dropdown">
+                      <li><a href="{% url 'listing:houseforsale' %}">Houses</a></li>
+                      <li><a href="{% url 'listing:flatforsale' %}">Flats</a></li>
+                      <li><a href="{% url 'listing:plotforsale' %}">Plots</a></li>
+                    </ul>
+                  </li>
+                  <li class="has-children"><a href="#">For Rent</a>
+                  <ul class="dropdown">
+                      <li><a href="{% url 'listing:houseforrent' %}">Houses</a></li>
+                      <li><a href="{% url 'listing:flatforrent' %}">Flats</a></li>
+                      <li><a href="{% url 'listing:plotforrent' %}">Plots</a></li>
                     </ul>
                   </li>
                 </ul>
               </li>
+                {% if user.is_authenticated %}
+                    {% if user.profile.role == 'agent' %}
+              <li><a href="{% url 'listing:addproperty' %}">Add Property</a></li>
+                    {% endif %}
+                {% endif %}
               <li><a href="services.html">Services</a></li>
               <li><a href="about.html">About</a></li>
               <li><a href="contact.html">Contact Us</a></li>
