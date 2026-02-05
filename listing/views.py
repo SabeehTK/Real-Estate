@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.views import View
-from listing.forms import AddPropertyForm
-from listing.models import Property,Wishlist
+from listing.forms import AddPropertyForm,EnquiryForm
+from listing.models import Property,Wishlist,Enquiry
 from accounts.models import Profile
 from django.db.models import Q
 from django.utils.decorators import method_decorator
@@ -156,3 +156,29 @@ class MyPropertyView(View):
         props = Property.objects.filter(owner=request.user)
         context = {'property': props}
         return render(request, 'myproperty.html',context)
+
+class EnquiryView(View):
+    def get(self, request,i):
+        p=Property.objects.get(id=i)
+        form = EnquiryForm()
+        context = {'form': form}
+        return render(request, 'enquiry.html',context)
+    def post(self, request,i):
+        p=Property.objects.get(id=i)
+        form = EnquiryForm(request.POST)
+        if form.is_valid():
+            e=form.save(commit=False)
+            e.property=p
+            e.buyer=request.user
+            data=form.cleaned_data
+            print(data)
+            e.save()
+            return redirect('listing:propertydetail',pk=p.id)
+
+@method_decorator(login_required, name='dispatch')
+class AgentEnquiryView(View):
+    def get(self, request):
+        e=Enquiry.objects.filter(property__owner=request.user)
+        context = {'enquiries': e}
+        return render(request, 'enquiries.html',context)
+

@@ -29,3 +29,13 @@ class Wishlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
+
+class Enquiry(models.Model):
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE)
+    email = models.EmailField(default='eg@example.com')
+    phone_number = models.CharField(max_length=11,default='00000')
+    message = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.property.title

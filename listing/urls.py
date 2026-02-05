@@ -22,5 +22,7 @@ urlpatterns = [
     path('wishlist',views.WishlistView.as_view(),name='wishlist'),
     path('removewishlist/<int:i>',views.RemoveWishlist.as_view(),name='removewishlist'),
     path('myproperty',views.MyPropertyView.as_view(),name='myproperty'),
+    path('enquiry/<int:i>',views.EnquiryView.as_view(),name='enquiry'),
+    path('enquiries',views.AgentEnquiryView.as_view(),name='enquiries'),
 
 ]

@@ -425,7 +425,7 @@
           <h2 class="mb-4">Be a part of our growing real state agents</h2>
           <p>
             <a
-              href="#"
+              href="{% url 'accounts:register' %}"
               target="_blank"
               class="btn btn-primary text-white py-3 px-4"
               >Apply for Real Estate agent</a
@@ -452,21 +452,22 @@
           </div>
         </div>
         <div class="row">
+          {% for i in profilelist %}
+          {% if i.role == 'agent' %}
           <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
             <div class="h-100 person">
               <img
-                src="{% static 'images/person_1-min.jpg' %}"
+                src="{{i.profile_picture.url}}"
                 alt="Image"
                 class="img-fluid"
               />
 
               <div class="person-contents">
-                <h2 class="mb-0"><a href="#">James Doe</a></h2>
+                <h2 class="mb-0"><a href="#">{{i.user.first_name}}</a></h2>
                 <span class="meta d-block mb-3">Real Estate Agent</span>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Facere officiis inventore cumque tenetur laboriosam, minus
-                  culpa doloremque odio, neque molestias?
+                 Dedicated real estate professional known for combining market expertise with a client-first approach. With a reputation built on trust, transparency, and results, He has helped countless clients turn their property goals into reality.
+
                 </p>
 
                 <ul class="social list-unstyled list-inline dark-hover">
@@ -486,74 +487,9 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-            <div class="h-100 person">
-              <img
-                src="{% static 'images/person_2-min.jpg' %}"
-                alt="Image"
-                class="img-fluid"
-              />
+          {% endif %}
+          {% endfor %}
 
-              <div class="person-contents">
-                <h2 class="mb-0"><a href="#">Jean Smith</a></h2>
-                <span class="meta d-block mb-3">Real Estate Agent</span>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Facere officiis inventore cumque tenetur laboriosam, minus
-                  culpa doloremque odio, neque molestias?
-                </p>
-
-                <ul class="social list-unstyled list-inline dark-hover">
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-twitter"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-facebook"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-linkedin"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-instagram"></span></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0">
-            <div class="h-100 person">
-              <img
-                src="{% static 'images/person_3-min.jpg' %}"
-                alt="Image"
-                class="img-fluid"
-              />
-
-              <div class="person-contents">
-                <h2 class="mb-0"><a href="#">Alicia Huston</a></h2>
-                <span class="meta d-block mb-3">Real Estate Agent</span>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Facere officiis inventore cumque tenetur laboriosam, minus
-                  culpa doloremque odio, neque molestias?
-                </p>
-
-                <ul class="social list-unstyled list-inline dark-hover">
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-twitter"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-facebook"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-linkedin"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a href="#"><span class="icon-instagram"></span></a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

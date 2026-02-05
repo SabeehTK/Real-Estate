@@ -31,7 +31,6 @@
 <div class="row d-flex container" style="margin:150px;">
 {% for i in property %}
     {% if i.requirement == 'for sale' %}
-        {% if i.property_type != 'house' %}
 
   <div class="card m-3 col-6" style="width: 350px;">
                   <img src="{{i.image.url}}" class="card-img-top" style="height: 200px; object-fit: cover;" />
@@ -52,7 +51,7 @@
 <!--                    {% endif %}-->
               </div>
             </div>
-        {% endif %}
+
     {% endif %}
 {% endfor %}
     </div>

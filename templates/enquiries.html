@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block contents %}
+{% load static %}
+ <div
+      class="hero page-inner overlay"
+      style="background-image: url({% static 'images/hero_bg_3.jpg' %})"
+    >
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-lg-9 text-center mt-5">
+            <h1 class="heading" data-aos="fade-up">
+                Enquiries
+            </h1>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--<div class="card">-->
+<!--  <div class="card-header">-->
+<!--    Enquiry Requests-->
+<!--  </div>-->
+<!--  <ul class="list-group list-group-flush">-->
+<!--    {% for i in enquiries %}-->
+<!--      <li class="list-group-item">-->
+<!--        <strong>{{i.buyer.username}}</strong> asked about-->
+<!--        <em>{{i.property.title}}</em><br>-->
+<!--        <p>{{i.message }}</p>-->
+<!--        <small class="text-muted">{{i.date_added}}</small>-->
+<!--      </li>-->
+<!--    {% empty %}-->
+<!--      <li class="list-group-item">No enquiries yet.</li>-->
+<!--    {% endfor %}-->
+<!--  </ul>-->
+<!--</div>-->
+<div class="container my-5">
+{% for i in enquiries %}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{i.property.title}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{i.buyer.username}}</h6>
+    <p class="card-text">{{i.message}}</p>
+    <small class="card-text">{{i.date_added}}</small>
+    <div class="my-3 me-3">
+      <a href="#" class="btn btn-success me-3 fs-6" style="padding: 4px 8px; font-size: 14px;">Accept</a>
+      <a href="#" class="btn btn-danger fs-6" style="padding: 4px 8px; font-size: 14px;">Reject</a>
+    </div>
+  </div>
+</div>
+{% endfor %}
+  </div>
+{% endblock %}
