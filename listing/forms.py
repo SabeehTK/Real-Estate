@@ -12,3 +12,12 @@ class EnquiryForm(forms.ModelForm):
     class Meta:
         model = Enquiry
         fields = ['phone_number','email','message']
+
+class EnquiryAcceptedForm(forms.ModelForm):
+    class Meta:
+        model = Enquiry
+        fields = ['visiting_date','agent_response']
+        widgets = {
+            'visiting_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'agent_response': forms.Textarea(attrs={'rows': 3}),
+        }

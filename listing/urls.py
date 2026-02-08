@@ -24,5 +24,6 @@ urlpatterns = [
     path('myproperty',views.MyPropertyView.as_view(),name='myproperty'),
     path('enquiry/<int:i>',views.EnquiryView.as_view(),name='enquiry'),
     path('enquiries',views.AgentEnquiryView.as_view(),name='enquiries'),
+    path('enquiryaccept/<int:i>',views.EnquiryAcceptedView.as_view(),name='enquiryaccept'),
 
 ]

@@ -37,5 +37,12 @@ class Enquiry(models.Model):
     phone_number = models.CharField(max_length=11,default='00000')
     message = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
+    status_choices = [
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),]
+    status = models.CharField(choices=status_choices, default='pending', max_length=10)
+    visiting_date = models.DateTimeField(null=True, blank=True)
+    agent_response = models.TextField(null=True, blank=True)
     def __str__(self):
-        return self.property.title
+        return f"{self.property.title} - {self.status}"

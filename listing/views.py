@@ -7,6 +7,9 @@ from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
+from listing.forms import EnquiryAcceptedForm
+
+
 # Create your views here.
 class IndexView(View):
     def get(self, request):
@@ -181,4 +184,23 @@ class AgentEnquiryView(View):
         e=Enquiry.objects.filter(property__owner=request.user)
         context = {'enquiries': e}
         return render(request, 'enquiries.html',context)
+
+class EnquiryAcceptedView(View):
+    def get(self, request,i):
+        e=Enquiry.objects.get(id=i)
+        form = EnquiryAcceptedForm()
+        context = {'form': form}
+        return render(request, 'enquiryacceptform.html',context)
+    def post(self, request,i):
+        e=Enquiry.objects.get(id=i)
+        form = EnquiryAcceptedForm(request.POST,instance=e)
+        if form.is_valid():
+            f=form.save(commit=False)
+            f.status='accepted'
+            f.save()
+            return redirect('listing:enquiries')
+
+
+
+
 

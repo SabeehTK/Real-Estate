@@ -34,17 +34,21 @@
 <!--    {% endfor %}-->
 <!--  </ul>-->
 <!--</div>-->
-<div class="container my-5">
+<div class="container my-5 d-flex">
 {% for i in enquiries %}
-<div class="card" style="width: 18rem;">
+<div class="card me-3" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title">{{i.property.title}}</h5>
     <h6 class="card-subtitle mb-2 text-muted">{{i.buyer.username}}</h6>
     <p class="card-text">{{i.message}}</p>
     <small class="card-text">{{i.date_added}}</small>
     <div class="my-3 me-3">
-      <a href="#" class="btn btn-success me-3 fs-6" style="padding: 4px 8px; font-size: 14px;">Accept</a>
+      {% if i.status == 'accepted' %}
+      <span class="badge bg-secondary" style="padding:10px 15px">Accepted</span>
+      {% else %}
+      <a href="{% url 'listing:enquiryaccept' i.id %}" class="btn btn-success me-3 fs-6" style="padding: 4px 8px; font-size: 14px;">Accept</a>
       <a href="#" class="btn btn-danger fs-6" style="padding: 4px 8px; font-size: 14px;">Reject</a>
+      {% endif %}
     </div>
   </div>
 </div>
