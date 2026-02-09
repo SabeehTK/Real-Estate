@@ -1,6 +1,5 @@
 from django import forms
 from listing.models  import Property
-
 from listing.models import Enquiry
 
 class AddPropertyForm(forms.ModelForm):
@@ -19,5 +18,13 @@ class EnquiryAcceptedForm(forms.ModelForm):
         fields = ['visiting_date','agent_response']
         widgets = {
             'visiting_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'agent_response': forms.Textarea(attrs={'rows': 3}),
+        }
+
+class EnquiryRejectedForm(forms.ModelForm):
+    class Meta:
+        model = Enquiry
+        fields = ['agent_response']
+        widgets = {
             'agent_response': forms.Textarea(attrs={'rows': 3}),
         }

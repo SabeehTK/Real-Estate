@@ -1,13 +1,12 @@
+from django.core.mail import send_mail
 from django.shortcuts import render,redirect
 from django.views import View
-from listing.forms import AddPropertyForm,EnquiryForm
+from listing.forms import AddPropertyForm,EnquiryForm,EnquiryAcceptedForm,EnquiryRejectedForm
 from listing.models import Property,Wishlist,Enquiry
 from accounts.models import Profile
 from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-
-from listing.forms import EnquiryAcceptedForm
 
 
 # Create your views here.
@@ -185,11 +184,17 @@ class AgentEnquiryView(View):
         context = {'enquiries': e}
         return render(request, 'enquiries.html',context)
 
+class BuyerEnquiryView(View):
+    def get(self, request):
+        be=Enquiry.objects.filter(buyer=request.user)
+        context = {'be': be}
+        return render(request, 'buyerenquirypage.html',context)
+
 class EnquiryAcceptedView(View):
     def get(self, request,i):
         e=Enquiry.objects.get(id=i)
         form = EnquiryAcceptedForm()
-        context = {'form': form}
+        context = {'form': form,'enquiry':e}
         return render(request, 'enquiryacceptform.html',context)
     def post(self, request,i):
         e=Enquiry.objects.get(id=i)
@@ -198,7 +203,44 @@ class EnquiryAcceptedView(View):
             f=form.save(commit=False)
             f.status='accepted'
             f.save()
+            send_mail(
+                subject="Your enquiry has been accepted",
+                message=f"Dear {f.buyer.username},\n\n"
+                        f"Your enquiry for {f.property.title} has been accepted.\n"
+                        f"Visit scheduled on {f.visiting_date}.\n\n"
+                        f"Message from agent: {f.agent_response}",
+                from_email=None,  # uses DEFAULT_FROM_EMAIL
+                recipient_list=[f.email],
+                fail_silently=False,
+            )
+
             return redirect('listing:enquiries')
+
+class EnquiryRejectedView(View):
+    def get(self, request,i):
+        e=Enquiry.objects.get(id=i)
+        form=EnquiryRejectedForm()
+        context = {'form': form,'enquiry':e}
+        return render(request, 'enquiryrejectform.html',context)
+    def post(self, request,i):
+        e=Enquiry.objects.get(id=i)
+        form = EnquiryRejectedForm(request.POST,instance=e)
+        if form.is_valid():
+            f=form.save(commit=False)
+            f.status='rejected'
+            f.save()
+            send_mail(
+                subject="Your enquiry has been rejected",
+                message=f"Dear {f.buyer.username},\n\n"
+                        f"Your enquiry for {f.property.title} has been declined.\n"
+                        f"Message from agent: {f.agent_response}",
+                from_email=None,
+                recipient_list=[f.email],
+                fail_silently=False,
+            )
+            return redirect('listing:enquiries')
+
+
 
 
 

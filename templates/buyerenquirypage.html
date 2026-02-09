@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block contents %}
+<div class="container my-5 d-flex" >
+{% for i in be %}
+    {% if i.status == 'accepted' or i.status == 'pending' %}
+<div class="card me-3" style="width: 18rem;margin-top:150px;">
+  <div class="card-body">
+    <h5 class="card-title">{{i.property.title}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{i.property.owner}}</h6>
+    <div class="my-3 me-3">
+      {% if i.status == 'accepted' %}
+      <span class="badge bg-secondary" style="padding:10px 15px;font-size:13px;">Accepted</span>
+        <h6 class="card-subtitle my-2 text-muted">{{i.agent_response}}</h6>
+        <h6 class="card-subtitle my-2 text-muted" style="font-size:13px">Visiting-Date: {{i.visiting_date}}</h6>
+      {% else %}
+      <span class="badge" style="padding:10px 10px;background-color:#d9a109;font-size:13px;"><i class="fa-regular fa-clock me-1"></i>Pending</span>
+        <h6 class="card-subtitle my-2 text-muted" style="font-size:13px">Your request has been sent to the agent.Kindly wait for the response</h6>
+        {% endif %}
+<!--    <small class="card-text">{{i.date_added}}</small>-->
+    </div>
+  </div>
+</div>
+    {% endif %}
+{% endfor %}
+  </div>
+{% endblock %}
