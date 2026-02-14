@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+from datetime import timedelta
+import secrets
 # Create your models here.
 class Profile(models.Model):
     USER_ROLES = [
@@ -15,6 +18,19 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.role}"
+
+class EmailOTP(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    code = models.CharField(max_length=6,null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self):
+        return timezone.now() < self.created_at + timedelta(minutes=5)
+
+    def generate_otp(self):
+        otp= str(secrets.randbelow(1000000)).zfill(6)  # 6-digit OTP
+        self.code = otp
+        self.save()
 
 # from django.db.models.signals import post_save
 # from django.dispatch import receiver

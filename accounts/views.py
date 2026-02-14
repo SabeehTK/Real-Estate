@@ -4,6 +4,9 @@ from django.views import View
 from accounts.forms import UserForm,LoginForm,ProfileForm
 from django.contrib import messages
 
+from accounts.forms import OtpLoginForm
+from accounts.models import EmailOTP
+from django.core.mail import send_mail
 
 
 # Create your views here.
@@ -47,6 +50,53 @@ class Loginview(View):
             else: #if not exists
                 messages.error(request, "Invalid Username or Password!")
                 return redirect('accounts:login')
+
+class LoginViaOtp(View):
+    def get(self, request):
+        form_instance = OtpLoginForm()
+        context = {'otpform': form_instance}
+        return render(request,'loginviaotp.html',context)
+    def post(self, request):
+        form_instance = OtpLoginForm(request.POST)
+        if form_instance.is_valid():
+            u=form_instance.save(commit=False)
+            u.generate_otp()
+            send_mail(
+                subject="Landonhand-OTP",
+                message=f"Dear {u.user.username},\n\n"
+                        f"Your OTP for LandOnHand Login is {u.code}.\n\n\n"
+                        f"Do Not share the OTP with anyone including Landonhand personal.",
+                from_email=None,
+                recipient_list=[u.user.email],
+                fail_silently=False,
+            )
+            u.save()
+            return redirect('accounts:otpverification')
+
+class OtpVerificationView(View):
+    def get(self, request):
+        return render(request,'otpverification.html')
+    def post(self, request):
+        o = request.POST['o']  # retrieve the otp send by the user
+        try:
+            u = EmailOTP.objects.get(code=o)  # check whether record matching with the entered otp exists
+        except EmailOTP.DoesNotExist:
+            messages.error(request, "Invalid or expired OTP!")
+            return redirect('accounts:otpverification')
+        #checks expiry of otp:
+        if not u.is_valid():
+            u.delete()  # remove expired OTP
+            messages.error(request, "OTP has expired. Please request a new one.")
+            return redirect('accounts:loginviaotp')
+
+        # if exists then:
+        # u.code = None  # clear the otp from table
+        user=u.user
+        u.delete() #clear the entire emailotp field
+        login(request,user)  # add the user into current session
+        return redirect('index')
+
+
 
 class Logoutview(View):
     def get(self, request):
