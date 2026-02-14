@@ -6,6 +6,7 @@ from listing.models import Property,Wishlist,Enquiry
 from accounts.models import Profile
 from django.db.models import Q
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
 
 
@@ -176,6 +177,18 @@ class EnquiryView(View):
             print(data)
             e.save()
             return redirect('listing:propertydetail',pk=p.id)
+
+#for admin:
+def is_admin(user):
+    return user.is_superuser
+@method_decorator(user_passes_test(is_admin), name='dispatch')
+class DeleteEnquiryView(View):
+    def get(self, request,i):
+        p=Enquiry.objects.get(id=i)
+        p.delete()
+        return redirect('accounts:admin_dashboard')
+
+#
 
 @method_decorator(login_required, name='dispatch')
 class AgentEnquiryView(View):

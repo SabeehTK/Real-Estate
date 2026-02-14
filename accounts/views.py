@@ -3,13 +3,35 @@ from django.shortcuts import render,redirect
 from django.views import View
 from accounts.forms import UserForm,LoginForm,ProfileForm
 from django.contrib import messages
-
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
 from accounts.forms import OtpLoginForm
-from accounts.models import EmailOTP
+from accounts.models import EmailOTP,Profile
 from django.core.mail import send_mail
+
+from listing.models import Property, Enquiry
 
 
 # Create your views here.
+def is_admin(user):
+    return user.is_superuser
+@method_decorator(user_passes_test(is_admin), name='dispatch')
+class AdminDashboardView(View):
+    def get(self, request):
+        agent_count=Profile.objects.filter(role='agent').count()
+        buyer_count = Profile.objects.filter(role='buyer').count()
+        pendingenquiry_count = Enquiry.objects.filter(status='pending').count()
+        context = {
+            'properties': Property.objects.all(),
+            'enquiries': Enquiry.objects.all(),
+            'users': Profile.objects.all(),
+            'agent_count': agent_count,
+            'buyer_count': buyer_count,
+            'pendingenquiry_count': pendingenquiry_count,
+        }
+        return render(request,'admin_dashboard.html',context)
+
+
 class Registerview(View):
     def get(self, request):
         user_form = UserForm()
@@ -44,7 +66,11 @@ class Loginview(View):
             user=authenticate(username=u,password=p)#calls authenticate to verify if user exists
                                                     #if user exists then it returns to the user object
                                                     #else none
-            if user:#if user exists
+            if user and user.is_superuser == True:#if user is admin
+                login(request, user)
+                print('admin logged in')
+                return redirect('accounts:admin_dashboard')
+            elif user and user.is_superuser != True:#if user is not admin and exists
                 login(request,user)  #add the user into current session
                 return redirect('index')
             else: #if not exists

@@ -1,6 +1,7 @@
 from django.urls import path
 from accounts.views import Loginview,Registerview, Logoutview
 from accounts.views import OtpVerificationView, LoginViaOtp
+from accounts.views import AdminDashboardView
 
 app_name = 'accounts'
 urlpatterns = [
@@ -9,4 +10,5 @@ urlpatterns = [
     path('otpverification/', OtpVerificationView.as_view(), name='otpverification'),
     path('register/', Registerview.as_view(), name='register'),
     path('logout/', Logoutview.as_view(), name='logout'),
+    path('admin-dashboard/', AdminDashboardView.as_view(), name='admin_dashboard')
 ]
