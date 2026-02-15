@@ -13,6 +13,7 @@ from listing.models import Property, Enquiry
 
 
 # Create your views here.
+#admin-page:
 def is_admin(user):
     return user.is_superuser
 @method_decorator(user_passes_test(is_admin), name='dispatch')
@@ -29,7 +30,35 @@ class AdminDashboardView(View):
             'buyer_count': buyer_count,
             'pendingenquiry_count': pendingenquiry_count,
         }
-        return render(request,'admin_dashboard.html',context)
+        return render(request,'admin/admin_dashboard.html',context)
+
+class PropertyManagementView(View):
+    def get(self, request):
+        property_list = Property.objects.all()
+        context = {'properties': property_list}
+        return render(request,'admin/property_management.html',context)
+@method_decorator(user_passes_test(is_admin), name='dispatch')
+class AgentmanagementView(View):
+    def get(self, request):
+        agents=Profile.objects.filter(role='agent')
+        context={'agents': agents}
+        return render(request,'admin/agent_management.html',context)
+
+@method_decorator(user_passes_test(is_admin), name='dispatch')
+class ToggleAgentView(View):
+    def get(self, request,pk):
+        agent =Profile.objects.get(pk=pk, role='agent')
+        active = request.GET.get('active')
+        if active == '1':
+            agent.user.is_active = True
+        else:
+            agent.user.is_active = False
+
+        agent.user.save()
+        return redirect('accounts:agentmanagement')
+
+
+#admin-page/>
 
 
 class Registerview(View):

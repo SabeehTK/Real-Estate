@@ -2,6 +2,9 @@ from django.urls import path
 from accounts.views import Loginview,Registerview, Logoutview
 from accounts.views import OtpVerificationView, LoginViaOtp
 from accounts.views import AdminDashboardView
+from accounts.views import AgentmanagementView
+from accounts.views import ToggleAgentView
+from accounts.views import PropertyManagementView
 
 app_name = 'accounts'
 urlpatterns = [
@@ -10,5 +13,10 @@ urlpatterns = [
     path('otpverification/', OtpVerificationView.as_view(), name='otpverification'),
     path('register/', Registerview.as_view(), name='register'),
     path('logout/', Logoutview.as_view(), name='logout'),
-    path('admin-dashboard/', AdminDashboardView.as_view(), name='admin_dashboard')
+    #admin page urls:-
+    path('admin-dashboard/', AdminDashboardView.as_view(), name='admin_dashboard'),
+    path('propertymanagement/',PropertyManagementView.as_view(), name='propertymanagement'),
+    path('agentmanagement/',AgentmanagementView.as_view(), name='agentmanagement'),
+    path('toggleagent/<int:pk>',ToggleAgentView.as_view(), name='toggleagent'),
+
 ]
