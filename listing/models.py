@@ -26,7 +26,8 @@ class Property(models.Model):
         return self.title
 
 class Wishlist(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='wishlist')
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
 

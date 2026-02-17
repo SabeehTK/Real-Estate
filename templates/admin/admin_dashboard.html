@@ -131,7 +131,7 @@
                         <thead>
                             <tr class="small text-uppercase text-muted">
                                 <th>Buyer</th>
-                                <th>Inquiry For</th>
+                                <th>Enquiry For</th>
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th class="text-end">Management</th>
@@ -145,8 +145,9 @@
                                 <td>{{ enquiry.date_added|date:"M d, Y" }}</td>
                                 <td>
                                     <span class="badge rounded-pill badge-status
-                                        {% if enquiry.status == 'New' %}bg-primary-subtle text-primary
-                                        {% else %}bg-secondary-subtle text-secondary{% endif %}">
+                                        {% if enquiry.status == 'accepted' %}bg-success text-light
+                                        {% elif enquiry.status == 'rejected' %}bg-danger text-light
+                                        {% else %}bg-warning text-light{% endif %}">
                                         {{ enquiry.status }}
                                     </span>
                                 </td>

@@ -5,6 +5,9 @@ from accounts.views import AdminDashboardView
 from accounts.views import AgentmanagementView
 from accounts.views import ToggleAgentView
 from accounts.views import PropertyManagementView
+from accounts.views import BuyermanagementView
+from accounts.views import ToggleBuyerView
+from accounts.views import EnquiryManagementView
 
 app_name = 'accounts'
 urlpatterns = [
@@ -18,5 +21,7 @@ urlpatterns = [
     path('propertymanagement/',PropertyManagementView.as_view(), name='propertymanagement'),
     path('agentmanagement/',AgentmanagementView.as_view(), name='agentmanagement'),
     path('toggleagent/<int:pk>',ToggleAgentView.as_view(), name='toggleagent'),
-
+    path('buyermanagement/',BuyermanagementView.as_view(), name='buyermanagement'),
+    path('togglebuyer/<int:i>',ToggleBuyerView.as_view(), name='togglebuyer'),
+    path('enquirymanagement/',EnquiryManagementView.as_view(), name='enquirymanagement'),
 ]

@@ -42,7 +42,7 @@
 
     <nav class="site-nav">
       <div class="container">
-        <div class="menu-bg-wrap">
+        <div class="menu-bg-wrap" style="background-color:#003755;">
           <div class="site-navigation">
             <a href="index.html" class="logo m-0 float-start">LandsOnHand</a>
 
@@ -76,7 +76,6 @@
                 <li><a href="{% url 'listing:enquiries' %}">Enquiries</a></li>
                     {% endif %}
                 {% endif %}
-              <li><a href="services.html">Services</a></li>
               <li><a href="about.html">About</a></li>
               <li><a href="contact.html">Contact Us</a></li>
                 {% if user.is_authenticated %}
@@ -91,7 +90,7 @@
           <div class="d-flex align-items-center ">
   <a href="#" class="d-inline-flex align-items-center justify-content-center text-white text-decoration-none"
      style="width: 40px; height: 40px; border-radius: 8px; background-color: #6F6FA2;">
-                <i class="bi bi-person-fill"></i>
+                {{user.username|slice:":1"|upper}}
   </a>
   <span class="ms-2 text-white">{{user.first_name}}<span class="badge ms-2" style="padding:10px 15px;background-color:#d9a109;">{{user.profile.role}}</span></span>
 </div>

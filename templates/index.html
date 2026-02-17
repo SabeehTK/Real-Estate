@@ -2,18 +2,32 @@
 {% block contents %}
 {% load static %}
 <div class="hero">
-      <div class="hero-slide">
+<!--      <div class="hero-slide">-->
+<!--        <div-->
+<!--          class="img overlay"-->
+<!--          style="background-image: url('{% static 'images/hero_bg_3.jpg' %}')"-->
+<!--        ></div>-->
+<!--        <div-->
+<!--          class="img overlay"-->
+<!--          style="background-image: url('{%static 'images/hero_bg_2.jpg' %}')"-->
+<!--        ></div>-->
+<!--        <div-->
+<!--          class="img overlay"-->
+<!--          style="background-image: url('{% static 'images/hero_bg_1.jpg' %}')"-->
+<!--        ></div>-->
+<!--      </div>-->
+        <div class="hero-slide">
         <div
           class="img overlay"
-          style="background-image: url('{% static 'images/hero_bg_3.jpg' %}')"
+          style="background-image: url('{% static 'images/bg1.jpg' %}')"
         ></div>
         <div
           class="img overlay"
-          style="background-image: url('{%static 'images/hero_bg_2.jpg' %}')"
+          style="background-image: url('{%static 'images/bg2.jpg' %}')"
         ></div>
         <div
           class="img overlay"
-          style="background-image: url('{% static 'images/hero_bg_1.jpg' %}')"
+          style="background-image: url('{% static 'images/bg3.jpg' %}')"
         ></div>
       </div>
 
@@ -21,7 +35,7 @@
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center">
             <h1 class="heading" data-aos="fade-up">
-              Easiest way to find your dream home
+              Discover homes tailored to your lifestyle
             </h1>
             <form
               action="{% url 'listing:search' %}"
@@ -35,7 +49,7 @@
                 class="form-control px-4"
                 placeholder="Your ZIP code or City. e.g. New York"
               />
-              <button type="submit" class="btn btn-primary">Search</button>
+              <button type="submit" class="btn" style="background-color:#003755;">Search</button>
             </form>
           </div>
         </div>

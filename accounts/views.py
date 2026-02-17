@@ -57,7 +57,31 @@ class ToggleAgentView(View):
         agent.user.save()
         return redirect('accounts:agentmanagement')
 
+@method_decorator(user_passes_test(is_admin), name='dispatch')
+class BuyermanagementView(View):
+    def get(self, request):
+        buyers=Profile.objects.filter(role='buyer')
+        context={'buyers': buyers}
+        return render(request,'admin/buyer_management.html',context)
 
+@method_decorator(user_passes_test(is_admin), name='dispatch')
+class ToggleBuyerView(View):
+    def get(self, request,i):
+        buyer=Profile.objects.get(id=i, role='buyer')
+        active= request.GET.get('active')
+        if active == '1':
+            buyer.user.is_active = True
+        else:
+            buyer.user.is_active = False
+
+        buyer.user.save()
+        return redirect('accounts:buyermanagement')
+
+class EnquiryManagementView(View):
+    def get(self, request):
+        enquiries=Enquiry.objects.all()
+        context={'enquiries': enquiries}
+        return render(request,'admin/enquiry_management.html',context)
 #admin-page/>
 
 
