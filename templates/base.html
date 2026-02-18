@@ -28,6 +28,107 @@
     <title>
       LandsOnHand &mdash; Real Estate
     </title>
+      <style>
+       .site-footer {
+  background-color: #002535; /* Slightly darker than the header for depth */
+  padding: 100px 0 30px;
+  color: #aebbc1;
+  font-size: 15px;
+}
+
+.site-footer h3 {
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.footer-logo {
+  font-size: 24px !important;
+  color: #fff !important;
+  letter-spacing: -1px;
+}
+
+.footer-logo span {
+  color: #7289da; /* Soft accent color for 'Hand' */
+}
+
+.brand-text {
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+/* Links */
+.site-footer .links li {
+  margin-bottom: 12px;
+}
+
+.site-footer .links li a {
+  color: #aebbc1;
+  text-decoration: none;
+  transition: .3s all ease;
+}
+
+.site-footer .links li a:hover {
+  color: #fff;
+  padding-left: 8px;
+}
+
+/* Social Icons */
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icons li a {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+  transition: .3s all ease;
+}
+
+.social-icons li a:hover {
+  background: #003147; /* Header Navy Blue */
+  transform: translateY(-3px);
+}
+
+/* Newsletter Customization */
+.newsletter-box .form-control {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  border-radius: 4px 0 0 4px;
+}
+
+.btn-primary-custom {
+  background: #003147; /* Matches your Search Button */
+  border: none;
+  color: #fff;
+  padding: 0 20px;
+  border-radius: 0 4px 4px 0;
+  transition: .3s opacity ease;
+}
+
+.btn-primary-custom:hover {
+  opacity: 0.9;
+  color: #fff;
+}
+
+.copyright, .credits {
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+.credits a {
+  color: #fff;
+  text-decoration: none;
+}
+      </style>
   </head>
 <body>
 <!--header-->
@@ -44,7 +145,7 @@
       <div class="container">
         <div class="menu-bg-wrap" style="background-color:#003755;">
           <div class="site-navigation">
-            <a href="index.html" class="logo m-0 float-start">LandsOnHand</a>
+            <a href="index.html" class="logo m-0 float-start">LandOnHand</a>
 
             <ul
               class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
@@ -91,8 +192,9 @@
   <a href="#" class="d-inline-flex align-items-center justify-content-center text-white text-decoration-none"
      style="width: 40px; height: 40px; border-radius: 8px; background-color: #6F6FA2;">
                 {{user.username|slice:":1"|upper}}
+<!--      <img src="{{user.profile.profile_picture.url}}" alt="profile" height="30px" width="30px">-->
   </a>
-  <span class="ms-2 text-white">{{user.first_name}}<span class="badge ms-2" style="padding:10px 15px;background-color:#d9a109;">{{user.profile.role}}</span></span>
+  <span class="ms-2 text-white">{{user.first_name}}<span class="badge ms-2" style="padding:10px 15px;{% if user.profile.role == 'buyer' %}background-color:#d9a109;{% else %}background-color:#56a873;{% endif %}">{{user.profile.role}}</span></span>
 </div>
 </li>
               {% else%}
@@ -128,111 +230,80 @@
 {% block contents %}
 {% endblock %}
 <!--footer-->
- <div class="site-footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="widget">
-              <h3>Contact</h3>
-              <address>43 Raymouth Rd. Baltemoer, London 3910</address>
-              <ul class="list-unstyled links">
-                <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-                <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-                <li>
-                  <a href="mailto:info@mydomain.com">info@mydomain.com</a>
-                </li>
-              </ul>
-            </div>
-            <!-- /.widget -->
-          </div>
-          <!-- /.col-lg-4 -->
-          <div class="col-lg-4">
-            <div class="widget">
-              <h3>Sources</h3>
-              <ul class="list-unstyled float-start links">
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Vision</a></li>
-                <li><a href="#">Mission</a></li>
-                <li><a href="#">Terms</a></li>
-                <li><a href="#">Privacy</a></li>
-              </ul>
-              <ul class="list-unstyled float-start links">
-                <li><a href="#">Partners</a></li>
-                <li><a href="#">Business</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Creative</a></li>
-              </ul>
-            </div>
-            <!-- /.widget -->
-          </div>
-          <!-- /.col-lg-4 -->
-          <div class="col-lg-4">
-            <div class="widget">
-              <h3>Links</h3>
-              <ul class="list-unstyled links">
-                <li><a href="#">Our Vision</a></li>
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Contact us</a></li>
-              </ul>
-
-              <ul class="list-unstyled social">
-                <li>
-                  <a href="#"><span class="icon-instagram"></span></a>
-                </li>
-                <li>
-                  <a href="#"><span class="icon-twitter"></span></a>
-                </li>
-                <li>
-                  <a href="#"><span class="icon-facebook"></span></a>
-                </li>
-                <li>
-                  <a href="#"><span class="icon-linkedin"></span></a>
-                </li>
-                <li>
-                  <a href="#"><span class="icon-pinterest"></span></a>
-                </li>
-                <li>
-                  <a href="#"><span class="icon-dribbble"></span></a>
-                </li>
-              </ul>
-            </div>
-            <!-- /.widget -->
-          </div>
-          <!-- /.col-lg-4 -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 mb-5 mb-lg-0">
+        <div class="widget">
+          <h3 class="footer-logo">LandOn<span>Hand</span></h3>
+          <p class="brand-text">Helping you discover homes tailored to your lifestyle. From urban condos to suburban retreats, we bring your vision home.</p>
+          <ul class="list-unstyled social-icons">
+            <li><a href="#"><span class="icon-facebook"></span></a></li>
+            <li><a href="#"><span class="icon-twitter"></span></a></li>
+            <li><a href="#"><span class="icon-instagram"></span></a></li>
+            <li><a href="#"><span class="icon-linkedin"></span></a></li>
+          </ul>
         </div>
-        <!-- /.row -->
+      </div>
 
-        <div class="row mt-5">
-          <div class="col-12 text-center">
-            <!--
-              **==========
-              NOTE:
-              Please don't remove this copyright link unless you buy the license here https://untree.co/license/
-              **==========
-            -->
+      <div class="col-lg-2 col-md-6 mb-5 mb-lg-0">
+        <div class="widget">
+          <h3>Quick Links</h3>
+          <ul class="list-unstyled links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Properties</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
 
-            <p>
-              Copyright &copy;
-              <script>
-                document.write(new Date().getFullYear());
-              </script>
-              . All Rights Reserved. &mdash; Designed with love by
-              <a href="https://untree.co">Untree.co</a>
-              <!-- License information: https://untree.co/license/ -->
-            </p>
-            <div>
-              Distributed by
-              <a href="https://themewagon.com/" target="_blank">themewagon</a>
-            </div>
+      <div class="col-lg-2 col-md-6 mb-5 mb-lg-0">
+        <div class="widget">
+          <h3>Properties</h3>
+          <ul class="list-unstyled links">
+            <li><a href="#">Residential</a></li>
+            <li><a href="#">Commercial</a></li>
+            <li><a href="#">Land for Sale</a></li>
+            <li><a href="#">Luxury Estates</a></li>
+            <li><a href="#">New Listings</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-4 mb-5 mb-lg-0">
+        <div class="widget">
+          <h3>Contact Us</h3>
+          <address class="contact-address">
+            43 Raymouth Rd. Baltemoer,<br> London 3910
+          </address>
+          <ul class="list-unstyled contact-details">
+            <li><a href="tel://11234567890">+1(123)-456-7890</a></li>
+            <li><a href="mailto:info@landsonhand.com">info@landsonhand.com</a></li>
+          </ul>
+
+          <div class="newsletter-box mt-4">
+            <h4 class="h6 text-white mb-3">Subscribe to Listings</h4>
+            <form action="#" class="d-flex">
+              <input type="email" class="form-control" placeholder="Email">
+              <button class="btn btn-primary-custom" type="submit">Send</button>
+            </form>
           </div>
         </div>
       </div>
-      <!-- /.container -->
     </div>
-    <!-- /.site-footer -->
+
+    <div class="row mt-5 pt-4 border-top border-secondary">
+      <div class="col-md-6 text-center text-md-start">
+        <p class="copyright">Copyright &copy; <script>document.write(new Date().getFullYear());</script> LandsOnHand. All Rights Reserved.</p>
+      </div>
+      <div class="col-md-6 text-center text-md-end">
+        <p class="credits">Designed by <a href="https://untree.co">Untree.co</a> | Distributed by <a href="https://themewagon.com/">ThemeWagon</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
 <!--footer-->
     <!-- Preloader -->
     <div id="overlayer"></div>
